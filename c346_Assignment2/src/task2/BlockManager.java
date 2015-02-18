@@ -34,7 +34,7 @@ public class BlockManager
 	/**
 	 * For atomicity
 	 */
-	//private static Semaphore mutex = new Semaphore(...);
+	protected static Semaphore mutex = new Semaphore();
 
 	/*
 	 * For synchronization
