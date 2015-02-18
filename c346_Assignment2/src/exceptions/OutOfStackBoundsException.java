@@ -11,11 +11,11 @@ public class OutOfStackBoundsException extends Exception {
 	private static final long serialVersionUID = -5760831093153003481L;
 
 	/**
-	 * Constructs an ElementNotFoundException with "Element at index does not exist" as its error
+	 * Constructs an ElementNotFoundException with "Out of stack bounds" as its error
 	 * message.
 	 */
 	public OutOfStackBoundsException() {
-		super("Element does not exist.");
+		super("Out of stack bounds");
 	}
 
 	/**

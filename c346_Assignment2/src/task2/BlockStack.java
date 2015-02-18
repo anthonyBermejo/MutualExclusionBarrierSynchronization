@@ -102,7 +102,7 @@ class BlockStack {
 		// Task 1
 		stackAccessCounter += 1;
 
-		if (piPosition >= 0 && piPosition <= this.iTop)
+		if (piPosition >= 0 && piPosition < this.iSize)
 			return this.acStack[piPosition];
 		else
 			throw new OutOfStackBoundsException();
