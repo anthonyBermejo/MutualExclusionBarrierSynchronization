@@ -105,6 +105,7 @@ public class BaseThread extends Thread
 	 */
 	protected synchronized void phase1()
 	{
+		
 		System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] starts PHASE I.");
 
 		System.out.println
@@ -117,6 +118,7 @@ public class BaseThread extends Thread
 		);
 
 		System.out.println(this.getClass().getName() + " thread [TID=" + this.iTID + "] finishes PHASE I.");
+		
 	}
 
 	/**
