@@ -1,5 +1,5 @@
-package task3
-;
+package task3;
+
 // Import (aka include) some stuff.
 import common.*;
 
@@ -34,7 +34,7 @@ public class BlockManager
 	/**
 	 * For atomicity
 	 */
-	//private static Semaphore mutex = new Semaphore(...);
+	protected static Semaphore mutex = new Semaphore(1);
 
 	/*
 	 * For synchronization

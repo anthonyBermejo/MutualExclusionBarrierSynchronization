@@ -59,7 +59,6 @@ class BlockStack {
 
 		if (piSize != DEFAULT_SIZE) {
 			
-			BlockManager.mutex.P();
 			this.acStack = new char[piSize];
 
 			// Fill in with letters of the alphabet and keep
@@ -71,8 +70,7 @@ class BlockStack {
 
 			this.iTop = piSize - 3;
 			this.iSize = piSize;
-			
-			BlockManager.mutex.V();
+
 		}
 	}
 
@@ -86,16 +84,12 @@ class BlockStack {
 
 		char top = '$';
 		
-		BlockManager.mutex.P();
-		
 		stackAccessCounter += 1;
 		
 		if (!isEmpty())
 			top = this.acStack[this.iTop];
 		else
 			throw new EmptyStackException();
-			
-		BlockManager.mutex.V();
 		
 		return top;
 	}
@@ -107,14 +101,10 @@ class BlockStack {
 	 * @throws OutOfStackBoundsException 
 	 */
 	public char getAt(final int piPosition) throws OutOfStackBoundsException {
-
-		BlockManager.mutex.P();
 		
 		stackAccessCounter += 1;
 
 		char stackChar = this.acStack[piPosition];
-		
-		BlockManager.mutex.V();
 		
 		if (piPosition >= 0 && piPosition < this.iSize) {
 			return stackChar;
@@ -140,8 +130,6 @@ class BlockStack {
 	 */
 	public void push(final char pcBlock) {
 		
-		BlockManager.mutex.P();
-		
 		stackAccessCounter += 1;
 
 		if (isEmpty())
@@ -153,7 +141,6 @@ class BlockStack {
 			this.acStack[++this.iTop] = pcBlock;
 		}
 		
-		BlockManager.mutex.V();
 	}
 
 	/**
@@ -166,8 +153,6 @@ class BlockStack {
 		
 		char cBlock = '$';
 		
-		BlockManager.mutex.P();
-		
 		stackAccessCounter += 1;
 		
 		if (!isEmpty()) {
@@ -176,9 +161,7 @@ class BlockStack {
 		}
 		else
 			throw new EmptyStackException();
-		
-		BlockManager.mutex.V();
-		
+
 		return cBlock;
 	}
 

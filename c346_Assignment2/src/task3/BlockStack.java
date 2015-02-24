@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import exceptions.EmptyStackException;
 import exceptions.OutOfStackBoundsException;
+import task3.BlockManager;
 
 /**
  * Class BlockStack Implements character block stack and operations upon it.
@@ -57,6 +58,8 @@ class BlockStack {
 	public BlockStack(final int piSize) {
 
 		if (piSize != DEFAULT_SIZE) {
+			
+			BlockManager.mutex.P();
 			this.acStack = new char[piSize];
 
 			// Fill in with letters of the alphabet and keep
@@ -68,6 +71,8 @@ class BlockStack {
 
 			this.iTop = piSize - 3;
 			this.iSize = piSize;
+			
+			BlockManager.mutex.V();
 		}
 	}
 
@@ -78,17 +83,20 @@ class BlockStack {
 	 * @throws EmptyStackException - if stack is empty
 	 */
 	public char pick() throws EmptyStackException {
-		// Task 1
-		stackAccessCounter += 1;
 
-		// Task 2
-		char top = '$'; //not sure about this
+		char top = '$';
+		
+		BlockManager.mutex.P();
+		
+		stackAccessCounter += 1;
 		
 		if (!isEmpty())
 			top = this.acStack[this.iTop];
 		else
 			throw new EmptyStackException();
 			
+		BlockManager.mutex.V();
+		
 		return top;
 	}
 
@@ -99,16 +107,23 @@ class BlockStack {
 	 * @throws OutOfStackBoundsException 
 	 */
 	public char getAt(final int piPosition) throws OutOfStackBoundsException {
-		// Task 1
+
+		BlockManager.mutex.P();
+		
 		stackAccessCounter += 1;
 
-		if (piPosition >= 0 && piPosition <= this.iTop)
-			return this.acStack[piPosition];
+		char stackChar = this.acStack[piPosition];
+		
+		BlockManager.mutex.V();
+		
+		if (piPosition >= 0 && piPosition < this.iSize) {
+			return stackChar;
+		}
 		else
 			throw new OutOfStackBoundsException();
 	}
 
-	public int getISize() {
+	public int getISize() {		
 		return iSize;
 	}
 
@@ -124,10 +139,11 @@ class BlockStack {
 	 * Standard push operation
 	 */
 	public void push(final char pcBlock) {
-		// Task 1
+		
+		BlockManager.mutex.P();
+		
 		stackAccessCounter += 1;
 
-		// Task 2
 		if (isEmpty())
 			this.acStack[++this.iTop] = 'a';
 		else if (this.iTop < this.iSize - 1)
@@ -136,6 +152,8 @@ class BlockStack {
 			expandArray();
 			this.acStack[++this.iTop] = pcBlock;
 		}
+		
+		BlockManager.mutex.V();
 	}
 
 	/**
@@ -145,10 +163,12 @@ class BlockStack {
 	 * @throws EmptyStackException 
 	 */
 	public char pop() throws EmptyStackException {
-		// Task 1
-		stackAccessCounter += 1;
-
+		
 		char cBlock = '$';
+		
+		BlockManager.mutex.P();
+		
+		stackAccessCounter += 1;
 		
 		if (!isEmpty()) {
 			cBlock = this.acStack[this.iTop];
@@ -156,6 +176,8 @@ class BlockStack {
 		}
 		else
 			throw new EmptyStackException();
+		
+		BlockManager.mutex.V();
 		
 		return cBlock;
 	}
